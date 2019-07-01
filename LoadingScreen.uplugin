@@ -11,7 +11,8 @@
   "DocsURL": "https://github.com/ue4plugins/LoadingScreen",
   "SupportURL": "https://github.com/ue4plugins/LoadingScreen/issues",
   "EngineVersion": "4.20.0",
-  "EnabledByDefault": false,
+  "EnabledByDefault": true,
+  "Installed": true,
   "CanContainContent": true,
 
   "Modules": [

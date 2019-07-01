@@ -67,66 +67,79 @@ void SSimpleLoadingScreen::Construct(const FArguments& InArgs, const FLoadingScr
 			.Text(Settings->Tips[TipIndex]);
 	}
 
-	Root->AddSlot()
-	.HAlign(HAlign_Fill)
-	.VAlign(VAlign_Bottom)
-	[
-		SNew(SBorder)
-		.HAlign(HAlign_Fill)
-		.VAlign(VAlign_Fill)
-		.BorderBackgroundColor(FLinearColor(0, 0, 0, 0.75))
-		.BorderImage(FCoreStyle::Get().GetBrush("WhiteBrush"))
+	if ( InScreenDescription.bShowCenteredSpinner )
+	{
+		Root->AddSlot()
+		.VAlign(VAlign_Center)
+		.HAlign(HAlign_Center)
 		[
-			SNew(SSafeZone)
+			SNew(SThrobber)
+		];
+		}
+
+	if ( InScreenDescription.bShowBottomBarWithTips )
+	{
+		Root->AddSlot()
+		.HAlign(HAlign_Fill)
+		.VAlign(VAlign_Bottom)
+		[
+			SNew(SBorder)
 			.HAlign(HAlign_Fill)
-			.VAlign(VAlign_Bottom)
-			.IsTitleSafe(true)
+			.VAlign(VAlign_Fill)
+			.BorderBackgroundColor(FLinearColor(0, 0, 0, 0.75))
+			.BorderImage(FCoreStyle::Get().GetBrush("WhiteBrush"))
 			[
-				SNew(SDPIScaler)
-				.DPIScale(this, &SSimpleLoadingScreen::GetDPIScale)
+				SNew(SSafeZone)
+				.HAlign(HAlign_Fill)
+				.VAlign(VAlign_Bottom)
+				.IsTitleSafe(true)
 				[
-					SNew(SHorizontalBox)
-
-					+ SHorizontalBox::Slot()
-					.Padding(FMargin(25, 0.0f, 0, 0))
-					.VAlign(VAlign_Center)
-					.AutoWidth()
+					SNew(SDPIScaler)
+					.DPIScale(this, &SSimpleLoadingScreen::GetDPIScale)
 					[
-						SNew(SCircularThrobber)
-						// Convert font size to pixels, pixel_size = point_size * resolution / 72, then half it to get radius
-						.Radius((LoadingFont.Size * 96.0f/72.0f) / 2.0f)
-					]
+						SNew(SHorizontalBox)
 
-					+ SHorizontalBox::Slot()
-					.Padding(FMargin(40.0f, 0.0f, 0, 0))
-					.AutoWidth()
-					.VAlign(VAlign_Center)
-					[
-						SNew(STextBlock)
-						.Text(InScreenDescription.LoadingText)
-						.Font(LoadingFont)
-					]
+						+ SHorizontalBox::Slot()
+						.Padding(FMargin(25, 0.0f, 0, 0))
+						.VAlign(VAlign_Center)
+						.AutoWidth()
+						[
+							SNew(SCircularThrobber)
+							// Convert font size to pixels, pixel_size = point_size * resolution / 72, then half it to get radius
+							.Radius((LoadingFont.Size * 96.0f/72.0f) / 2.0f)
+						]
 
-					+ SHorizontalBox::Slot()
-					.FillWidth(1)
-					.HAlign(HAlign_Fill)
-					[
-						SNew(SSpacer)
-						.Size(FVector2D(1.0f, 1.0f))
-					]
+						+ SHorizontalBox::Slot()
+						.Padding(FMargin(40.0f, 0.0f, 0, 0))
+						.AutoWidth()
+						.VAlign(VAlign_Center)
+						[
+							SNew(STextBlock)
+							.Text(InScreenDescription.LoadingText)
+							.Font(LoadingFont)
+						]
 
-					+ SHorizontalBox::Slot()
-					.AutoWidth()
-					.HAlign(HAlign_Right)
-					.VAlign(VAlign_Center)
-					.Padding(FMargin(10.0f))
-					[
-						TipWidget
+						+ SHorizontalBox::Slot()
+						.FillWidth(1)
+						.HAlign(HAlign_Fill)
+						[
+							SNew(SSpacer)
+							.Size(FVector2D(1.0f, 1.0f))
+						]
+
+						+ SHorizontalBox::Slot()
+						.AutoWidth()
+						.HAlign(HAlign_Right)
+						.VAlign(VAlign_Center)
+						.Padding(FMargin(10.0f))
+						[
+							TipWidget
+						]
 					]
 				]
 			]
-		]
-	];
+		];
+	}
 
 	ChildSlot
 	[

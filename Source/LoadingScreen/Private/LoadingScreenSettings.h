@@ -41,11 +41,19 @@ struct LOADINGSCREEN_API FLoadingScreenDescription
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Movies)
 	TArray<FString> MoviePaths;
 
-	/**  Should we show the images/tips/loading text?  Generally you'll want to set this to false if you just want to show a movie. */
+	/** Should we show the images/tips/loading text?  Generally you'll want to set this to false if you just want to show a movie. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Display)
 	bool bShowUIOverlay;
 
-	/**  Text displayed beside the animated icon */
+	/** Should we show an horizontal spinner centered in the middle of the screen? */
+	UPROPERTY(config, EditAnywhere, BlueprintReadWrite, Category=Display)
+	bool bShowCenteredSpinner;
+
+	/** Should we show a bar at the bottom with a circular spinner (typically for tips)? */
+	UPROPERTY(config, EditAnywhere, BlueprintReadWrite, Category=Display)
+	bool bShowBottomBarWithTips;
+
+	/** Text displayed beside the animated icon */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Display)
 	FText LoadingText;
 
@@ -68,11 +76,11 @@ class LOADINGSCREEN_API ULoadingScreenSettings : public UDeveloperSettings
 
 public:
 
-	/** The startup screen for the project. */
+	/** The initial Splash Screen for the game (one-time). */
 	UPROPERTY(config, EditAnywhere, Category=Screens)
 	FLoadingScreenDescription StartupScreen;
 
-	/** The default load screen between maps. */
+	/** The loading screen used between maps (non-seamless travel). */
 	UPROPERTY(config, EditAnywhere, Category=Screens)
 	FLoadingScreenDescription DefaultScreen;
 

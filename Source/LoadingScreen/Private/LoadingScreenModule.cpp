@@ -4,6 +4,7 @@
 #include "LoadingScreenSettings.h"
 #include "SSimpleLoadingScreen.h"
 #include "Framework/Application/SlateApplication.h"
+#include "MoviePlayer.h"
 
 #define LOCTEXT_NAMESPACE "LoadingScreen"
 
@@ -50,12 +51,13 @@ void FLoadingScreenModule::StartupModule()
 
 		if ( IsMoviePlayerEnabled() )
 		{
+			// Handle case were trying to play a movie if the loading screen has not been prepared.
 			GetMoviePlayer()->OnPrepareLoadingScreen().AddRaw(this, &FLoadingScreenModule::HandlePrepareLoadingScreen);
-		}
 
-		// Prepare the startup screen, the PrepareLoadingScreen callback won't be called
-		// if we've already explictly setup the loading screen.
-		BeginLoadingScreen(Settings->StartupScreen);
+			// Prepare the startup screen, the PrepareLoadingScreen callback won't be called
+			// if we've already explicitly setup the loading screen.
+			BeginLoadingScreen(Settings->StartupScreen);
+		}
 	}
 }
 
