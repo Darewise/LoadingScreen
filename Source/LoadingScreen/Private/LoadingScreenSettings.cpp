@@ -9,8 +9,8 @@
 
 FLoadingScreenSlotPosition::FLoadingScreenSlotPosition()
 	: Anchors(0.5f)
-	, Offset(NoInit)
-	, Alignment(NoInit)
+	, Offset(ForceInit)
+	, Alignment(ForceInit)
 { }
 
 FLoadingScreenSlotText::FLoadingScreenSlotText()
